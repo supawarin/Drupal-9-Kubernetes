@@ -1,0 +1,60 @@
+#mysql service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal-mysql-service
+spec:
+  type: NodePort
+  ports:
+  - name: drupal-mysql
+    port: 3306
+    targetPort: 3306
+    nodePort: 31100
+  selector:
+    app: drupal-mysql
+  
+
+#mysql deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: drupal-mysql
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal-mysql
+  template: 
+    metadata: 
+      labels: 
+        app: drupal-mysql
+    spec:
+      containers:
+       - image: mariadb:latest
+         name: mysql-drupal-cont
+         resources:
+           requests:
+             memory: "64Mi"
+             cpu: "250m"
+           limits:
+             memory: "128Mi"
+             cpu: "500m"
+         env:
+         - name: MYSQL_ROOT_PASSWORD
+           value: "password"   
+         - name: MYSQL_DATABASE
+           value: drupal-db       
+         ports:
+         - containerPort: 3306
+           name: drupal-mysql
+           protocol: TCP
+         volumeMounts:
+         - name: vol-drupal
+           mountPath: /var/lib/drupal-mysql
+           subPath: dbdata
+      volumes:
+      - name: vol-drupal
+        persistentVolumeClaim:
+          claimName: drupal-pvc-mysql

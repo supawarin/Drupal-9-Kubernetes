@@ -1,0 +1,66 @@
+# drupal deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: drupal9
+  name: drupal9
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal9
+  template:
+    metadata:
+      labels:
+        app: drupal9
+    spec:
+      initContainers:
+      - name: init-sites-volume
+        image: drupal:9.2.5
+        command: ['/bin/bash', '-c']
+        args: ['cp -r /var/www/html/sites/ /data/; chown www-data:www-data /data/ -R']
+        volumeMounts:
+        - mountPath: /data
+          name: vol-drupal
+      containers:
+      - image: drupal:9.2.5
+        name: drupal9
+        ports: 
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /var/www/html/modules
+          name: vol-drupal
+          subPath: modules
+        - mountPath: /var/www/html/profiles
+          name: vol-drupal
+          subPath: profiles
+        - mountPath: /var/www/html/sites
+          name: vol-drupal
+          subPath: sites
+        - mountPath: /var/www/html/themes
+          name: vol-drupal
+          subPath: themes
+      volumes:
+      - name: vol-drupal
+        persistentVolumeClaim: 
+            claimName: drupal-pvc
+        
+
+        
+
+# drupal service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal9-service
+spec:
+  selector:
+    app: drupal9
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80  #port-forward svc/drupal9-service 32355:80
+    
