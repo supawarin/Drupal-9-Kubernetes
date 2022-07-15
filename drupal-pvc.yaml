@@ -1,22 +1,12 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: drupal-pvc
-spec:
-  resources:
-    requests:
-      storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: drupal-pvc-mysql
 spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi
-  accessModes:
-    - ReadWriteOnce

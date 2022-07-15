@@ -26,6 +26,7 @@ spec:
       containers:
       - image: drupal:9.2.5
         name: drupal9
+        
         ports: 
         - containerPort: 80
         volumeMounts:
@@ -62,5 +63,5 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    port: 80  #port-forward svc/drupal9-service 32355:80
+    port: 80  #port-forward svc/drupal9-service 32354:80
     
