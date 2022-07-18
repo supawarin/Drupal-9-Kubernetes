@@ -14,8 +14,9 @@ spec:
     targetPort: 3306
     nodePort: 31100
   selector:
-    app: drupal-db
-    tier: backend
+    app: drupal9
+    tier: mysql
+  
 
 #mysql deployment
 ---
@@ -27,25 +28,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: drupal-db
+      app: drupal9
+      tier: mysql
   strategy:
     type: Recreate
   template: 
     metadata: 
       labels: 
-        app: drupal-db
-        tier: backend
+        app: drupal9
+        tier: mysql
     spec:
       containers:
        - image: mariadb:latest
-         name: drupal-mysql-cont
-         resources:
-           requests:
-             memory: "64Mi"
-             cpu: "250m"
-           limits:
-             memory: "128Mi"
-             cpu: "500m"
+         name: drupal-mysql
          env:
          - name: MYSQL_ROOT_PASSWORD
            valueFrom:
@@ -61,10 +56,10 @@ spec:
            name: drupal-mysql 
            protocol: TCP
          volumeMounts:
-         - name: vol-drupal
-           mountPath: /var/lib/drupal-mysql
-           subPath: dbdata
+         - name: drupal-persistent-storage
+           mountPath: /var/lib/mysql
+           #subPath: dbdata
       volumes:
-      - name: vol-drupal
+      - name: drupal-persistent-storage
         persistentVolumeClaim:
           claimName: drupal-pvc-db

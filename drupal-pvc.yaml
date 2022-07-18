@@ -6,7 +6,6 @@ metadata:
   labels:
     app: drupal9
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:

@@ -27,7 +27,7 @@ spec:
         args: ['cp -r /var/www/html/sites/ /data/; chown www-data:www-data /data/ -R']
         volumeMounts:
         - mountPath: /data
-          name: vol-drupal
+          name: drupal-persistent-storage
       containers:
       - image: drupal:9.2.5
         name: drupal9
@@ -48,19 +48,19 @@ spec:
           name: drupal9
         volumeMounts:
         - mountPath: /var/www/html/modules
-          name: vol-drupal
+          name: drupal-persistent-storage
           subPath: modules
         - mountPath: /var/www/html/profiles
-          name: vol-drupal                  
+          name: drupal-persistent-storage                 
           subPath: profiles
         - mountPath: /var/www/html/sites
-          name: vol-drupal 
+          name: drupal-persistent-storage 
           subPath: sites
         - mountPath: /var/www/html/themes
-          name: vol-drupal
+          name: drupal-persistent-storage
           subPath: themes
       volumes:
-      - name: vol-drupal
+      - name: drupal-persistent-storage
         persistentVolumeClaim: 
             claimName: drupal-pvc
           
@@ -73,7 +73,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: drupal9-service
+  name: drupal9
   labels:
     app: drupal9
 spec:
