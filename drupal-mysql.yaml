@@ -11,10 +11,10 @@ spec:
   - name: drupal-db
     port: 3306
     targetPort: 3306
-    nodePort: 31100
   selector:
     app: drupal9
     tier: mysql
+  
   
   
 
