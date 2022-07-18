@@ -7,7 +7,6 @@ metadata:
   labels:
     app: drupal9
 spec:
-  type: NodePort
   ports:
   - name: drupal-db
     port: 3306
@@ -16,6 +15,7 @@ spec:
   selector:
     app: drupal9
     tier: mysql
+  
   
 
 #mysql deployment
