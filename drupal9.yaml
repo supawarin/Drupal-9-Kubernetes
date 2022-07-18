@@ -2,18 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: drupal9
   labels:
     app: drupal9
-  name: drupal9
+    tier: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: drupal9
+      tier: frontend
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: drupal9
+        tier: frontend
     spec:
       initContainers:
       - name: init-sites-volume
@@ -26,18 +31,30 @@ spec:
       containers:
       - image: drupal:9.2.5
         name: drupal9
-        
+        env:
+        - name: DRUPAL_DATABASE_HOST
+          value: "drupal-db-service"
+        - name: DRUPAL_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        - name: DRUPAL_DATABASE_USER
+          value: "root"
+        - name: MYSQL_DATABASE
+          value: "drupal-database"
         ports: 
         - containerPort: 80
+          name: drupal9
         volumeMounts:
         - mountPath: /var/www/html/modules
           name: vol-drupal
           subPath: modules
         - mountPath: /var/www/html/profiles
-          name: vol-drupal
+          name: vol-drupal                  
           subPath: profiles
         - mountPath: /var/www/html/sites
-          name: vol-drupal
+          name: vol-drupal 
           subPath: sites
         - mountPath: /var/www/html/themes
           name: vol-drupal
@@ -46,7 +63,8 @@ spec:
       - name: vol-drupal
         persistentVolumeClaim: 
             claimName: drupal-pvc
-        
+          
+
 
         
 
@@ -56,12 +74,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: drupal9-service
+  labels:
+    app: drupal9
 spec:
   selector:
     app: drupal9
+    tier: frontend
   type: NodePort
   ports:
   - name: http
     protocol: TCP
-    port: 80  #port-forward svc/drupal9-service 32354:80
+    port: 80  
+    targetPort: 80
+    nodePort: 31976
     

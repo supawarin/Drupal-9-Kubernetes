@@ -3,37 +3,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: drupal-mysql-service
+  name: drupal-db-service # host
+  labels:
+    app: drupal9
 spec:
   type: NodePort
   ports:
-  - name: drupal-mysql
+  - name: drupal-db
     port: 3306
     targetPort: 3306
     nodePort: 31100
   selector:
-    app: drupal-mysql
-  
+    app: drupal-db
+    tier: backend
 
 #mysql deployment
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: drupal-mysql
+  name: drupal-db
 spec: 
   replicas: 1
   selector:
     matchLabels:
-      app: drupal-mysql
+      app: drupal-db
+  strategy:
+    type: Recreate
   template: 
     metadata: 
       labels: 
-        app: drupal-mysql
+        app: drupal-db
+        tier: backend
     spec:
       containers:
        - image: mariadb:latest
-         name: mysql-drupal-cont
+         name: drupal-mysql-cont
          resources:
            requests:
              memory: "64Mi"
@@ -43,12 +48,17 @@ spec:
              cpu: "500m"
          env:
          - name: MYSQL_ROOT_PASSWORD
-           value: "password"   
+           valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password  
          - name: MYSQL_DATABASE
-           value: drupal-db       
+           value: "drupal-database"       
+         - name: MYSQL_USER
+           value: "root" 
          ports:
          - containerPort: 3306
-           name: drupal-mysql
+           name: drupal-mysql 
            protocol: TCP
          volumeMounts:
          - name: vol-drupal
@@ -57,4 +67,4 @@ spec:
       volumes:
       - name: vol-drupal
         persistentVolumeClaim:
-          claimName: drupal-pvc-mysql
+          claimName: drupal-pvc-db
