@@ -58,7 +58,6 @@ spec:
          volumeMounts:
          - name: drupal-persistent-storage
            mountPath: /var/lib/mysql
-           #subPath: dbdata
       volumes:
       - name: drupal-persistent-storage
         persistentVolumeClaim:

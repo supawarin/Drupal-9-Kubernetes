@@ -1,5 +1,5 @@
 # Drupal-9-Kubernetes
-create drupal-9 run on minikube (kubernetes)
+create drupal-9 run on  kubernetes
 How to easily deploy a Drupal instance on Kubernetes
 Drupal is quite a popular CMS with a big community. It is especially popular among large enterprises and for complex websites. In fact, some of the most visited sites in the world like NBC, The Economist, Cisco, RedHat or Tesla use Drupal as their corporate website CMS.
 
