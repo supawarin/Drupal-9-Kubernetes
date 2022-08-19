@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: Drupal
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -14,6 +14,29 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+  ## User of the application
+  ##
+username: admin
+
+  ## Site configuration
+  ##
+profile: wetkit
+siteEmail: supawarin8@gmail.com
+siteName: Drupal Install Profile (WetKit)
+
+# Install Drupal automatically
+install: true
+
+# Restore Drupal automatically
+restore:
+  enabled: false
+  name: latest
+  db: true
+  files: false
+  suppressTarErrors: false
+
+    # Convert MyISAM to InnoDB
+convert: false
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -37,7 +60,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: NodePort #ClusterIP
   port: 80
 
 ingress:
@@ -80,3 +103,24 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# CHANGE THIS! Otherwise restore won't complete.
+volume: {}
+# emptyDir: {}
+# Run migrations for default content
+migrate: false
+
+  # Reconfigure on upgrade
+reconfigure: true
+cacheRebuildBeforeDatabaseMigration: true
+updateDBBeforeDatabaseMigration: true
+
+mariadb:
+  enabled: true
+  imageTag: latest
+  mysqlRootPassword: password
+  mysqlUser: root
+  mysqlDatabase: drupal-database
+  ## Persist data to a persistent volume
+  persistence:
+    enabled: true
