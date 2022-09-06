@@ -37,12 +37,16 @@ After a few seconds, check that your volumes have been provided. If everything i
 #### 2.Deploying a MySQL  ####
 
 To deploy the MySQL instance we will use a Deployment and a Service. Note that we run MySQL from root. When you run it in production, use custom credentials. 
+
      2.1 Create mysql-secret.yaml file below :
-     <img width="774" alt="drupal7" src="https://user-images.githubusercontent.com/83863431/188572279-87e47bad-ccf3-44e2-872c-bf224e835947.png">
+     
+   <img width="774" alt="drupal7" src="https://user-images.githubusercontent.com/83863431/188572279-87e47bad-ccf3-44e2-872c-bf224e835947.png">
      
      Run the command : kubectl apply -f mysql-secret.yaml
      
      Then check that the secret is running: kubectl get secret
+     
+     
      
      2.2 Create drupal-mysql.yaml file below : ( mysql-service + mysql-deployment )
      
@@ -69,6 +73,7 @@ The Deployment will be based on a container with a Drupal image from Docker Hub 
      Run the command: kubectl apply -f drupal9.yaml
      
      Then check it : kubectl get svc  and kubectl get  pods
+     
 
 Installing Drupal
 Now that the infrastructure has been deployed, let’s install Drupal. You have just to navigate to the IP address and port you got in the previous step OR if you do not use cloud provider’s load balancer and have an external IP for your machine, navigate to external_IP:port.
@@ -85,6 +90,8 @@ Database password: your_password, same as MYSQL_PASSWORD environment variable in
 Host: drupal-mysql-service, same as the MySQL Service name
 
 Port: 3306, same as the MySQL Service port
+
+
 ![Drupal_7_screenshot](https://user-images.githubusercontent.com/83863431/188574107-f0729429-a45e-4c47-9b15-e45635ec4e9a.png)
 
 
