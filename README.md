@@ -79,9 +79,15 @@ Installing Drupal
 Now that the infrastructure has been deployed, let’s install Drupal. You have just to navigate to the IP address and port you got in the previous step OR if you do not use cloud provider’s load balancer and have an external IP for your machine, navigate to external_IP:port.
 If use minikube must run command kubectl port-forward svc/drupal9-service 32355:80    {example}
 
+  ![20200909-drupal-9-0-1](https://user-images.githubusercontent.com/83863431/188577221-1e91f747-9df3-44e5-ae52-fb056b0fcfc2.jpeg)
+
+
 Follow the installation instructions from the wizard. Use the database credentials you configured earlier in the MySQL deployment.
 
 For example, in our case, here is the data that should be specified on the Database configuration screen:
+
+  ![Set-Drupal-Database-Settings](https://user-images.githubusercontent.com/83863431/188577312-bcd799e4-13b4-4062-8f7d-129b5940d1d7.jpeg)
+
 
 Database name: drupal-database, same as MYSQL_DATABASE environment variable in the MySQL Deployment 
 
@@ -90,6 +96,9 @@ Database password: your_password, same as MYSQL_PASSWORD environment variable in
 Host: drupal-mysql-service, same as the MySQL Service name
 
 Port: 3306, same as the MySQL Service port
+
+![installing-drupal-1](https://user-images.githubusercontent.com/83863431/188577379-47fdfd9a-39ab-46d5-a855-da931242b5dc.png)
+
 
 
 ![Drupal_7_screenshot](https://user-images.githubusercontent.com/83863431/188574107-f0729429-a45e-4c47-9b15-e45635ec4e9a.png)
