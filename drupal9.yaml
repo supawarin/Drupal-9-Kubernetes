@@ -1,4 +1,25 @@
+# drupal service
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal9
+  labels:
+    app: drupal9
+spec:
+  selector:
+    app: drupal9
+    tier: frontend
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80  
+    targetPort: 80
+    nodePort: 31976
+    
+
 # drupal deployment
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,6 +52,12 @@ spec:
       containers:
       - image: drupal:9.2.5
         name: drupal9
+        resources:
+            limits:
+              cpu: 800m # the CPU limit is define in milicore (m)
+              memory: 800Mi # the Memory is define in Mebibytes (Mi)
+            requests:
+              cpu: 500m
         env:
         - name: DRUPAL_DATABASE_HOST
           value: "drupal-db-service"
@@ -68,23 +95,4 @@ spec:
 
         
 
-# drupal service
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: drupal9
-  labels:
-    app: drupal9
-spec:
-  selector:
-    app: drupal9
-    tier: frontend
-  type: NodePort
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80  
-    targetPort: 80
-    nodePort: 31976
-    
+

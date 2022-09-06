@@ -41,6 +41,12 @@ spec:
       containers:
        - image: mariadb:latest
          name: drupal-mysql
+         resources:
+            limits:
+              cpu: 800m # the CPU limit is define in milicore (m)
+              memory: 800Mi # the Memory is define in Mebibytes (Mi)
+            requests:
+              cpu: 500m
          env:
          - name: MYSQL_ROOT_PASSWORD
            valueFrom:
