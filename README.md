@@ -19,26 +19,26 @@ In Kubernetes it is recommended to use the PersistentVolume object to retain the
 
   In this case we request two volumes of 3Gi each that will be provided automatically through a persistent volume. The first will be used for the website files, and the second one for the database.
   
-     1.1 create mysql-pvc.yaml file below :
+###  1.1 create mysql-pvc.yaml file below : ###
    <img width="550" alt="drupal1" src="https://user-images.githubusercontent.com/83863431/188566077-8e16a492-90d4-4943-875b-2f67f6271834.png">
 
      Run the command: kubectl apply -f mysql-pvc.yaml
      
-     1.2 create drupal-pvc.yaml file below :
+###  1.2 create drupal-pvc.yaml file below : ###
    <img width="617" alt="drupal2" src="https://user-images.githubusercontent.com/83863431/188566579-8fd00093-ba39-4755-892a-1a6395b84dae.png">
 
      Run the command: kubectl apply -f drupal-pvc.yaml
      
 After a few seconds, check that your volumes have been provided. If everything is fine, you should see that the PersistentVolumes has been provisioned and the PersistentVolumeClaims have been bound to it. 
 
-     Run the command: kubectl get pvc
+    Then check it : kubectl get pvc
      
      
 #### 2.Deploying a MySQL  ####
 
 To deploy the MySQL instance we will use a Deployment and a Service. Note that we run MySQL from root. When you run it in production, use custom credentials. 
 
-     2.1 Create mysql-secret.yaml file below :
+###  2.1 Create mysql-secret.yaml file below : ###
      
    <img width="774" alt="drupal7" src="https://user-images.githubusercontent.com/83863431/188572279-87e47bad-ccf3-44e2-872c-bf224e835947.png">
      
@@ -48,7 +48,7 @@ To deploy the MySQL instance we will use a Deployment and a Service. Note that w
      
      
      
-     2.2 Create drupal-mysql.yaml file below : ( mysql-service + mysql-deployment )
+ ###  2.2 Create drupal-mysql.yaml file below : ( mysql-service + mysql-deployment ) ###
      
    <img width="488" alt="drupal3" src="https://user-images.githubusercontent.com/83863431/188569883-b0ee5e6e-c3a2-458e-9308-4803fcee8bb2.png">
    <img width="622" alt="drupal4" src="https://user-images.githubusercontent.com/83863431/188570166-14e63a23-1dd4-49bd-8f1c-644c525dc4ef.png">
@@ -63,7 +63,7 @@ To deploy the MySQL instance we will use a Deployment and a Service. Note that w
 
 The Deployment will be based on a container with a Drupal image from Docker Hub repository. In addition, we will also use a temporary container (InitContainer) whose mission will be to pre-populate the persistent storage with the data used by Drupal. 
 
-     3.1 Create drupal9.yaml file below : ( drupal-service + drupal-deployment )
+ ### 3.1 Create drupal9.yaml file below : ( drupal-service + drupal-deployment ) ###
      
    <img width="459" alt="drupal6" src="https://user-images.githubusercontent.com/83863431/188571707-30908289-f820-478d-a550-8341d2f37705.png">
    <img width="812" alt="drupal8" src="https://user-images.githubusercontent.com/83863431/188573373-70a971ea-724f-4c89-9688-ec62f2e23066.png">
