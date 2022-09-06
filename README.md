@@ -20,12 +20,12 @@ In Kubernetes it is recommended to use the PersistentVolume object to retain the
   In this case we request two volumes of 3Gi each that will be provided automatically through a persistent volume. The first will be used for the website files, and the second one for the database.
   
      1.1 create mysql-pvc.yaml file below :
-     <img width="550" alt="drupal1" src="https://user-images.githubusercontent.com/83863431/188566077-8e16a492-90d4-4943-875b-2f67f6271834.png">
+   <img width="550" alt="drupal1" src="https://user-images.githubusercontent.com/83863431/188566077-8e16a492-90d4-4943-875b-2f67f6271834.png">
 
      Run the command: kubectl apply -f mysql-pvc.yaml
      
      1.2 create drupal-pvc.yaml file below :
-     <img width="617" alt="drupal2" src="https://user-images.githubusercontent.com/83863431/188566579-8fd00093-ba39-4755-892a-1a6395b84dae.png">
+   <img width="617" alt="drupal2" src="https://user-images.githubusercontent.com/83863431/188566579-8fd00093-ba39-4755-892a-1a6395b84dae.png">
 
      Run the command: kubectl apply -f drupal-pvc.yaml
      
@@ -45,9 +45,10 @@ To deploy the MySQL instance we will use a Deployment and a Service. Note that w
      Then check that the secret is running: kubectl get secret
      
      2.2 Create drupal-mysql.yaml file below : ( mysql-service + mysql-deployment )
-     <img width="488" alt="drupal3" src="https://user-images.githubusercontent.com/83863431/188569883-b0ee5e6e-c3a2-458e-9308-4803fcee8bb2.png">
-     <img width="622" alt="drupal4" src="https://user-images.githubusercontent.com/83863431/188570166-14e63a23-1dd4-49bd-8f1c-644c525dc4ef.png">
-     <img width="600" alt="drupal5" src="https://user-images.githubusercontent.com/83863431/188570339-725f8b79-2282-4b5e-9048-bb5e8ac20ba6.png">
+     
+   <img width="488" alt="drupal3" src="https://user-images.githubusercontent.com/83863431/188569883-b0ee5e6e-c3a2-458e-9308-4803fcee8bb2.png">
+   <img width="622" alt="drupal4" src="https://user-images.githubusercontent.com/83863431/188570166-14e63a23-1dd4-49bd-8f1c-644c525dc4ef.png">
+   <img width="600" alt="drupal5" src="https://user-images.githubusercontent.com/83863431/188570339-725f8b79-2282-4b5e-9048-bb5e8ac20ba6.png">
 
      Run the command : kubectl apply -f drupal-mysql.yaml
      
@@ -60,9 +61,9 @@ The Deployment will be based on a container with a Drupal image from Docker Hub 
 
      3.1 Create drupal9.yaml file below : ( drupal-service + drupal-deployment )
      
-     <img width="459" alt="drupal6" src="https://user-images.githubusercontent.com/83863431/188571707-30908289-f820-478d-a550-8341d2f37705.png">
-     <img width="812" alt="drupal8" src="https://user-images.githubusercontent.com/83863431/188573373-70a971ea-724f-4c89-9688-ec62f2e23066.png">
-     <img width="665" alt="drupal9" src="https://user-images.githubusercontent.com/83863431/188573571-14e2e178-b225-46eb-9ab4-cb492e325d4e.png">
+   <img width="459" alt="drupal6" src="https://user-images.githubusercontent.com/83863431/188571707-30908289-f820-478d-a550-8341d2f37705.png">
+   <img width="812" alt="drupal8" src="https://user-images.githubusercontent.com/83863431/188573373-70a971ea-724f-4c89-9688-ec62f2e23066.png">
+   <img width="665" alt="drupal9" src="https://user-images.githubusercontent.com/83863431/188573571-14e2e178-b225-46eb-9ab4-cb492e325d4e.png">
 
 
      Run the command: kubectl apply -f drupal9.yaml
