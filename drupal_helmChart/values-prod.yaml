@@ -1,0 +1,11 @@
+env: prod
+
+# ports
+svcAccessPort: 31979
+
+
+# mysql / mariadb
+user: root
+password: prodPassword
+database: prodDrupal
+  

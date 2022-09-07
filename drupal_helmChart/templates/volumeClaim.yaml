@@ -1,0 +1,28 @@
+# drupal pvc
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: drupal-claim-{{ .Values.env }}
+  labels:
+    app: drupal-{{ .Values.env }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+# mysql claim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: drupal-claim-db-{{ .Values.env }}
+  labels:
+    app: drupal-{{ .Values.env }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi  

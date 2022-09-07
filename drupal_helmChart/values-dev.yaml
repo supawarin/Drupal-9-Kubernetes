@@ -1,0 +1,12 @@
+env: dev
+
+# ports
+svcAccessPort: 31978
+
+
+
+# mysql / mariadb
+user: root
+password: devPassword
+database: devDrupal
+  

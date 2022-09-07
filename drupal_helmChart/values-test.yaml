@@ -1,0 +1,12 @@
+env: test
+
+# ports
+svcAccessPort: 31977
+
+
+
+# mysql / mariadb
+user: root
+password: testPassword
+database: testDrupal
+  

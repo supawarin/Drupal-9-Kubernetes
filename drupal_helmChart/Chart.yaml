@@ -1,0 +1,48 @@
+# drupal chart
+apiVersion: v2
+name: drupal
+description: A Helm chart for drupal
+type: application
+version: 0.1.0
+appVersion: 9.2.5
+deprecated: true
+## description: DEPRECATED One of the most versatile open source content management systems.
+keywords:
+- drupal
+- cms
+- blog
+- http
+- web
+- application
+- php
+home: http://www.drupal.org/
+icon: https://bitnami.com/assets/stacks/drupal/img/drupal-stack-220x234.png
+sources:
+- https://github.com/bitnami/bitnami-docker-drupal
+maintainers:
+- name: nokadmin
+  email: supawarin8@gmail.com
+
+# mysql chart
+---
+apiVersion: v2
+name: mariadb
+version: 7.3.14
+appVersion: latest
+# The mariadb chart is deprecated and no longer maintained. For details deprecation, see the PROCESSES.md file.
+deprecated: true
+keywords:
+  - mariadb
+  - mysql
+  - database
+  - sql
+  - prometheus
+home: https://mariadb.org
+icon: https://bitnami.com/assets/stacks/mariadb/img/mariadb-stack-220x234.png
+sources:
+  - https://github.com/bitnami/bitnami-docker-mariadb
+  - https://github.com/prometheus/mysqld_exporter
+maintainers: []
+#engine: gotpl
+
+

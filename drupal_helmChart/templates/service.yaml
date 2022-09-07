@@ -1,0 +1,40 @@
+# drupal service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal-{{ .Values.env }}
+  labels:
+    app: drupal-{{ .Values.env }}
+    
+spec:
+  selector:
+    app: drupal-{{ .Values.env }}
+    tier: frontend
+    
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: {{ .Values.svcAccessPort }}
+
+#mysql service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal-db-{{ .Values.env }} # host
+  labels:
+    app: drupal-{{ .Values.env }}
+    
+spec:
+  ports:
+  - name: drupal-db-{{ .Values.env }}
+    port: 3306
+    targetPort: 3306
+  selector:
+    app: drupal-{{ .Values.env }}
+    tier: mysql
+    

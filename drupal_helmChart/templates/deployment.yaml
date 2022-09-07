@@ -1,0 +1,111 @@
+# drupal deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal-{{ .Values.env }}
+  labels:
+    app: drupal-{{ .Values.env }}
+    tier: frontend    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal-{{ .Values.env }}
+      tier: frontend      
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: drupal-{{ .Values.env }}
+        tier: frontend        
+    spec:
+      initContainers:
+      - name: init-sites-{{ .Values.env }}
+        image: drupal:9.2.5
+        command: ['/bin/bash', '-c']
+        args: ['cp -r /var/www/html/sites/ /data/; chown www-data:www-data /data/ -R']
+        volumeMounts:
+        - mountPath: /data
+          name: drupal-persistent-storage
+      containers:
+      - image: drupal:9.2.5
+        name: drupal-{{ .Values.env }}
+        env:
+        - name: DRUPAL_DATABASE_HOST
+          value: drupal-db-{{ .Values.env }}
+
+        - name: DRUPAL_DATABASE_PASSWORD
+          value: {{ .Values.password }}
+            
+        - name: DRUPAL_DATABASE_USER
+          value: {{ .Values.user }}
+
+        - name: MYSQL_DATABASE
+          value: {{ .Values.database }}
+        ports: 
+        - containerPort: 80 
+          name: drupal-{{ .Values.env }}
+        volumeMounts:
+        - mountPath: /var/www/html/modules
+          name: drupal-persistent-storage
+          subPath: modules
+        - mountPath: /var/www/html/profiles
+          name: drupal-persistent-storage                 
+          subPath: profiles
+        - mountPath: /var/www/html/sites
+          name: drupal-persistent-storage 
+          subPath: sites
+        - mountPath: /var/www/html/themes
+          name: drupal-persistent-storage
+          subPath: themes
+      volumes:
+      - name: drupal-persistent-storage
+        persistentVolumeClaim: 
+            claimName: drupal-claim-{{ .Values.env }}
+
+---
+# mysql deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: drupal-db-{{ .Values.env }}
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal-{{ .Values.env }}
+      tier: mysql      
+  strategy:
+    type: Recreate
+  template: 
+    metadata: 
+      labels: 
+        app: drupal-{{ .Values.env }}
+        tier: mysql        
+    spec:
+      containers:
+       - image: mariadb:latest
+         name: drupal-db-{{ .Values.env }}
+         env:
+         - name: MYSQL_ROOT_PASSWORD
+           value: {{ .Values.password }}
+
+         - name: MYSQL_USER
+           value: {{ .Values.user }}  
+
+         - name: MYSQL_DATABASE
+           value: {{ .Values.database }}    
+         
+         ports:
+         - containerPort: 3306 
+           name: drupal-db-{{ .Values.env }}
+           protocol: TCP
+         volumeMounts:
+         - name: drupal-persistent-storage
+           mountPath: /var/lib/mysql
+      volumes:
+      - name: drupal-persistent-storage
+        persistentVolumeClaim:
+          claimName: drupal-claim-db-{{ .Values.env }}
+
