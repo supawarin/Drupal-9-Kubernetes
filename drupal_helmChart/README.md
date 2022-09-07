@@ -34,7 +34,7 @@ use NodePort number , example below:
 
   <img width="714" alt="drupal10" src="https://user-images.githubusercontent.com/83863431/188840783-9eda466f-188c-4f8c-b0d9-0fc8b9c91627.png">
 
-http://localhost:31978   fordrupal-dev
+http://localhost:31978   for drupal-dev
 
 http://localhost:31977   for drupal-test
 
