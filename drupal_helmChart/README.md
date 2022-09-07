@@ -5,7 +5,7 @@ Demo helm install drupal app run on kubernetes
 
 
 
-## Run app drupal , mariadb and phpmyadmin
+## Run app drupal and mariadb 
 
 helm install testdrupal -f values-test.yaml ./ 
 
@@ -16,3 +16,4 @@ helm install proddrupal -f values-prod.yaml ./
 ## Delete all
 
 helm delete drupal           
+
