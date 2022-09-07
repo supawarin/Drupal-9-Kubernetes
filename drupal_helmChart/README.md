@@ -34,8 +34,9 @@ use NodePort number , example below:
 
   <img width="714" alt="drupal10" src="https://user-images.githubusercontent.com/83863431/188840783-9eda466f-188c-4f8c-b0d9-0fc8b9c91627.png">
 
-http://localhost:31978   for dev-drupal
-http://localhost:31977   for test-drupal
+http://localhost:31978   fordrupal-dev
+
+http://localhost:31977   for drupal-test
 
   ![20200909-drupal-9-0-1](https://user-images.githubusercontent.com/83863431/188577221-1e91f747-9df3-44e5-ae52-fb056b0fcfc2.jpeg)
   
